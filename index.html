@@ -3,30 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unresponsive Resource Simulation</title>
+    <title>Network Idle 2 Simulation</title>
 </head>
 <body>
-    <h1>Random Unresponsive API Test</h1>
+    <h1>API Dependent Button Example</h1>
+    <div id="content"></div>
 
     <script>
-        // ランダムに応答しない API をシミュレーション
-        function randomUnresponsiveFetch() {
-            return new Promise((resolve, reject) => {
-                const shouldRespond = Math.random() > 0.5; // 50% の確率で応答しない
-                if (shouldRespond) {
-                    setTimeout(() => resolve("Data loaded!"), 5000); // 正常応答
-                } else {
-                    // 永遠に応答しない（何も返さない）
-                    console.log("API is unresponsive...");
-                }
+        // APIリクエストシミュレーション
+        function fetchButtonData() {
+            return new Promise((resolve) => {
+                const delay = Math.random() > 0.5 ? 5000 : 1000; // 50%の確率で5秒遅延
+                setTimeout(() => {
+                    const shouldDisplayButton = Math.random() > 0.5;
+                    resolve(shouldDisplayButton);
+                }, delay);
             });
         }
 
-        // ランダムにAPIを呼び出す
-        randomUnresponsiveFetch().then((response) => {
-            document.body.innerHTML += `<p>${response}</p>`;
-        }).catch((error) => {
-            console.error("Error:", error);
+        // ボタン表示のための非同期処理
+        fetchButtonData().then(shouldDisplayButton => {
+            const contentDiv = document.getElementById('content');
+            if (shouldDisplayButton) {
+                const button = document.createElement('button');
+                button.textContent = 'Click Me!';
+                button.id = 'apiButton';  // Puppeteerがクリックするターゲット
+                contentDiv.appendChild(button);
+                console.log('Button created after API call');
+            } else {
+                console.log('Button not created after API call');
+            }
         });
     </script>
 </body>
