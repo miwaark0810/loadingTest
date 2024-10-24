@@ -3,17 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Element Delay</title>
+    <title>Unresponsive Resource Simulation</title>
 </head>
 <body>
-    <h1>This page sometimes loads elements slowly</h1>
-    <div id="dynamicContent"></div>
+    <h1>Random Unresponsive API Test</h1>
 
     <script>
-        const delay = Math.random() > 0.7 ? 15000 : 2000; // 30% の確率で遅延発生
-        setTimeout(() => {
-            document.getElementById('dynamicContent').innerHTML = '<button id="targetButton">Click me</button>';
-        }, delay);
+        // ランダムに応答しない API をシミュレーション
+        function randomUnresponsiveFetch() {
+            return new Promise((resolve, reject) => {
+                const shouldRespond = Math.random() > 0.5; // 50% の確率で応答しない
+                if (shouldRespond) {
+                    setTimeout(() => resolve("Data loaded!"), 5000); // 正常応答
+                } else {
+                    // 永遠に応答しない（何も返さない）
+                    console.log("API is unresponsive...");
+                }
+            });
+        }
+
+        // ランダムにAPIを呼び出す
+        randomUnresponsiveFetch().then((response) => {
+            document.body.innerHTML += `<p>${response}</p>`;
+        }).catch((error) => {
+            console.error("Error:", error);
+        });
     </script>
 </body>
 </html>
