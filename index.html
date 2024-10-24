@@ -1,21 +1,19 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ローディング</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Element Delay</title>
 </head>
 <body>
-    <input type="button" id="button" name="keep_submit">
-    <script src="js/loading.js"></script>
-    <div>
-        <form action="test.html" method="post" enctype="multipart/form-data" >
-          <div>
-            <input type="file" name="test1">
-          </div>
-          <div>
-            <input type="submit" value="送信する">
-          </div>
-        </form>
-    </div>
+    <h1>This page sometimes loads elements slowly</h1>
+    <div id="dynamicContent"></div>
+
+    <script>
+        const delay = Math.random() > 0.7 ? 15000 : 2000; // 30% の確率で遅延発生
+        setTimeout(() => {
+            document.getElementById('dynamicContent').innerHTML = '<button id="targetButton">Click me</button>';
+        }, delay);
+    </script>
 </body>
 </html>
